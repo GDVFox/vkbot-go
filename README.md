@@ -1,5 +1,8 @@
 # VkBot-Go
 
+[![GoDoc](https://godoc.org/github.com/GDVFox/vkbot-go?status.svg)](https://godoc.org/github.com/GDVFox/vkbot-go)
+[![rcard](https://goreportcard.com/badge/github.com/GDVFox/vkbot-go)](https://goreportcard.com/report/github.com/GDVFox/vkbot-go)
+
 This package provides you bindings for the VK API
 
 ## Install & Import
