@@ -27,6 +27,8 @@ package main
 
 import (
     "log"
+    "net/http"
+	"net/url"
 
     vkAPI "github.com/GDVFox/vkbot-go"
 )
@@ -55,6 +57,7 @@ package main
 
 import (
     "log"
+    "net/http"
 
     vkAPI "github.com/GDVFox/vkbot-go"
 )
