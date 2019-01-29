@@ -30,8 +30,10 @@ package main
 
 import (
     "log"
+    "net/http"
+	"net/url"
 
-    "github.com/GDVFox/vkbot-go"
+    vkAPI "github.com/GDVFox/vkbot-go"
 )
 
 func main() {
@@ -58,8 +60,9 @@ package main
 
 import (
     "log"
+    "net/http"
 
-    "github.com/GDVFox/vkbot-go"
+    vkAPI "github.com/GDVFox/vkbot-go"
 )
 
 func main() {
