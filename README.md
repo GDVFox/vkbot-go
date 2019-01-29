@@ -28,7 +28,7 @@ package main
 import (
     "log"
 
-    "github.com/GDVFox/vkbot-go"
+    vkAPI "github.com/GDVFox/vkbot-go"
 )
 
 func main() {
@@ -56,7 +56,7 @@ package main
 import (
     "log"
 
-    "github.com/GDVFox/vkbot-go"
+    vkAPI "github.com/GDVFox/vkbot-go"
 )
 
 func main() {
