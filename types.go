@@ -2,6 +2,11 @@ package vkbotgo
 
 import "encoding/json"
 
+// APIParameters describes API method parameters with validate method
+type APIParameters interface {
+	Validate() error
+}
+
 //Event represents an event coming from the VK server.
 type Event struct {
 	Type    string          `json:"type"`

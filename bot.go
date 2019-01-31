@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+
+	"github.com/google/go-querystring/query"
 )
 
 // VkBot interacts with the VK API.
@@ -50,6 +52,25 @@ func (vkBot *VkBot) Request(method string, params url.Values) (*VkResponse, erro
 	}
 
 	return vkResp, nil
+}
+
+// CallMethod calls VK API method with given params(with validation).
+//
+// For params: CamelCase method name + Params.
+// Example: MessagesSendParams (for messages.send)
+func (vkBot *VkBot) CallMethod(method string, params APIParameters) (*VkResponse, error) {
+	err := params.Validate()
+	if err != nil {
+		return nil, err
+	}
+
+	vals, err := query.Values(params)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return vkBot.Request(method, vals)
 }
 
 // SetConfirmation sets a conformation response
