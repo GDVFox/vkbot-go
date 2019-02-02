@@ -27,7 +27,7 @@ func (param *UsersGetParams) Validate() error {
 		return fmt.Errorf("length(=%d) of parameter UserIds must be less or equal than 1000", len(param.UserIds))
 	}
 
-	enum2 := map[string]struct{}{"nom": struct{}{}, "gen": struct{}{}, "dat": struct{}{}, "acc": struct{}{}, "ins": struct{}{}, "abl": struct{}{}}
+	enum2 := map[string]struct{}{"nom": {}, "gen": {}, "dat": {}, "acc": {}, "ins": {}, "abl": {}}
 	if _, ok := enum2[param.NameCase]; !ok {
 		return fmt.Errorf("parameter NameCase(=%v) expected in [nom gen dat acc ins abl]", param.NameCase)
 	}
@@ -128,7 +128,7 @@ type UsersSearchParams struct {
 
 // Validate is called before sending a request to VK API to validate parameters.
 func (param *UsersSearchParams) Validate() error {
-	enum1 := map[int64]struct{}{0: struct{}{}, 1: struct{}{}}
+	enum1 := map[int64]struct{}{0: {}, 1: {}}
 	if _, ok := enum1[param.Sort]; !ok {
 		return fmt.Errorf("parameter Sort(=%v) expected in [0 1]", param.Sort)
 	}
@@ -177,7 +177,7 @@ func (param *UsersSearchParams) Validate() error {
 		return fmt.Errorf("parameter Sex(=%v) must be greater or equal than 0.000000", param.Sex)
 	}
 
-	enum13 := map[int64]struct{}{0: struct{}{}, 1: struct{}{}, 2: struct{}{}}
+	enum13 := map[int64]struct{}{0: {}, 1: {}, 2: {}}
 	if _, ok := enum13[param.Sex]; !ok {
 		return fmt.Errorf("parameter Sex(=%v) expected in [0 1 2]", param.Sex)
 	}
@@ -186,7 +186,7 @@ func (param *UsersSearchParams) Validate() error {
 		return fmt.Errorf("parameter Status(=%v) must be greater or equal than 0.000000", param.Status)
 	}
 
-	enum14 := map[int64]struct{}{0: struct{}{}, 1: struct{}{}, 2: struct{}{}, 3: struct{}{}, 4: struct{}{}, 5: struct{}{}, 6: struct{}{}, 7: struct{}{}}
+	enum14 := map[int64]struct{}{0: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}}
 	if _, ok := enum14[param.Status]; !ok {
 		return fmt.Errorf("parameter Status(=%v) expected in [0 1 2 3 4 5 6 7]", param.Status)
 	}
@@ -379,7 +379,7 @@ func (param *UsersGetFollowersParams) Validate() error {
 		return fmt.Errorf("parameter Count(=%v) must be less or equal than 1000.000000", param.Count)
 	}
 
-	enum4 := map[string]struct{}{"nom": struct{}{}, "gen": struct{}{}, "dat": struct{}{}, "acc": struct{}{}, "ins": struct{}{}, "abl": struct{}{}}
+	enum4 := map[string]struct{}{"nom": {}, "gen": {}, "dat": {}, "acc": {}, "ins": {}, "abl": {}}
 	if _, ok := enum4[param.NameCase]; !ok {
 		return fmt.Errorf("parameter NameCase(=%v) expected in [nom gen dat acc ins abl]", param.NameCase)
 	}
@@ -424,7 +424,7 @@ func (param *UsersReportParams) Validate() error {
 		return fmt.Errorf("parameter UserID(=%v) must be greater or equal than 0.000000", param.UserID)
 	}
 
-	enum1 := map[string]struct{}{"porn": struct{}{}, "spam": struct{}{}, "insult": struct{}{}, "advertisment": struct{}{}}
+	enum1 := map[string]struct{}{"porn": {}, "spam": {}, "insult": {}, "advertisment": {}}
 	if _, ok := enum1[param.Type]; !ok {
 		return fmt.Errorf("parameter Type(=%v) expected in [porn spam insult advertisment]", param.Type)
 	}
@@ -501,12 +501,12 @@ func (param *UsersGetNearbyParams) Validate() error {
 		return fmt.Errorf("parameter Radius(=%v) must be greater or equal than 0.000000", param.Radius)
 	}
 
-	enum4 := map[int64]struct{}{0: struct{}{}, 1: struct{}{}, 2: struct{}{}, 3: struct{}{}, 4: struct{}{}}
+	enum4 := map[int64]struct{}{0: {}, 1: {}, 2: {}, 3: {}, 4: {}}
 	if _, ok := enum4[param.Radius]; !ok {
 		return fmt.Errorf("parameter Radius(=%v) expected in [0 1 2 3 4]", param.Radius)
 	}
 
-	enum6 := map[string]struct{}{"nom": struct{}{}, "gen": struct{}{}, "dat": struct{}{}, "acc": struct{}{}, "ins": struct{}{}, "abl": struct{}{}}
+	enum6 := map[string]struct{}{"nom": {}, "gen": {}, "dat": {}, "acc": {}, "ins": {}, "abl": {}}
 	if _, ok := enum6[param.NameCase]; !ok {
 		return fmt.Errorf("parameter NameCase(=%v) expected in [nom gen dat acc ins abl]", param.NameCase)
 	}

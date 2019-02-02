@@ -63,7 +63,7 @@ func (param *MessagesGetConversationsParams) Validate() error {
 		return fmt.Errorf("parameter Count(=%v) must be less or equal than 200.000000", param.Count)
 	}
 
-	enum := map[string]struct{}{"all": struct{}{}, "unread": struct{}{}, "important": struct{}{}, "unanswered": struct{}{}}
+	enum := map[string]struct{}{"all": {}, "unread": {}, "important": {}, "unanswered": {}}
 	if _, ok := enum[param.Filter]; !ok {
 		return fmt.Errorf("parameter Filter(=%v) expected in [all unread important unanswered]", param.Filter)
 	}
@@ -360,7 +360,7 @@ func (param *MessagesGetHistoryParams) Validate() error {
 		return fmt.Errorf("parameter GroupID(=%v) must be greater or equal than 0.000000", param.GroupID)
 	}
 
-	enum := map[int64]struct{}{1: struct{}{}, 0: struct{}{}}
+	enum := map[int64]struct{}{1: {}, 0: {}}
 	if _, ok := enum[param.Rev]; !ok {
 		return fmt.Errorf("parameter Rev(=%v) expected in [1 0]", param.Rev)
 	}
@@ -409,7 +409,7 @@ type MessagesGetHistoryAttachmentsParams struct {
 
 // Validate is called before sending a request to VK API to validate parameters.
 func (param *MessagesGetHistoryAttachmentsParams) Validate() error {
-	enum := map[string]struct{}{"photo": struct{}{}, "video": struct{}{}, "doc": struct{}{}, "audio": struct{}{}, "link": struct{}{}, "market": struct{}{}, "wall": struct{}{}, "share": struct{}{}}
+	enum := map[string]struct{}{"photo": {}, "video": {}, "doc": {}, "audio": {}, "link": {}, "market": {}, "wall": {}, "share": {}}
 	if _, ok := enum[param.MediaType]; !ok {
 		return fmt.Errorf("parameter MediaType(=%v) expected in [photo video doc audio link market wall share]", param.MediaType)
 	}
@@ -1132,7 +1132,7 @@ func (param *MessagesGetConversationMembersParams) Validate() error {
 		return fmt.Errorf("parameter GroupID(=%v) must be greater or equal than 0.000000", param.GroupID)
 	}
 
-	enum := map[string]struct{}{"nom": struct{}{}, "gen": struct{}{}, "dat": struct{}{}, "acc": struct{}{}, "ins": struct{}{}, "abl": struct{}{}}
+	enum := map[string]struct{}{"nom": {}, "gen": {}, "dat": {}, "acc": {}, "ins": {}, "abl": {}}
 	if _, ok := enum[param.NameCase]; !ok {
 		return fmt.Errorf("parameter NameCase(=%v) expected in [nom gen dat acc ins abl]", param.NameCase)
 	}

@@ -65,7 +65,7 @@ type TestEventCase struct {
 
 func TestListenForEventsChannel(t *testing.T) {
 	cases := []TestEventCase{
-		TestEventCase{
+		{
 			EventString: `{"type": "group_join", "object": {"user_id": 1, "join_type" : "approved"}, "group_id": 1}`,
 			Evnt: &Event{
 				Type:    "group_join",
@@ -73,7 +73,7 @@ func TestListenForEventsChannel(t *testing.T) {
 				GroupID: 1,
 			},
 		},
-		TestEventCase{
+		{
 			EventString: `{"type": "group_leave", "object": {"user_id": 1, "self" : 1}, "group_id": 1}`,
 			Evnt: &Event{
 				Type:    "group_leave",
