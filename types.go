@@ -17,8 +17,16 @@ type Event struct {
 //EventsChannel is the channel for getting events.
 type EventsChannel chan *Event
 
+// VkError is a error in response of VK API
+type VkError struct {
+	ErrorCode int    `json:"error_code"`
+	ErrorMsg  string `json:"error_msg"`
+	// TODO: params
+}
+
 // VkResponse is a raw response from the VK API.
 type VkResponse struct {
+	Error    *VkError        `json:"error"`
 	Response json.RawMessage `json:"response"`
 }
 
