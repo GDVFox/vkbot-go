@@ -71,8 +71,7 @@ func NewVkBotWithAuth(login, pass, scope, ver string, clientID int64, client *ht
 
 	if resp.Request.URL.Path != "/blank.html" {
 		queryVals := resp.Request.URL.Query()
-		switch {
-		case queryVals.Get("act") == "authcheck":
+		if queryVals.Get("act") == "authcheck" {
 			// User uses Two-factor authentication
 			// Enter confirmation code for VK message
 			var confirmString string
@@ -95,16 +94,15 @@ func NewVkBotWithAuth(login, pass, scope, ver string, clientID int64, client *ht
 			defer resp.Body.Close()
 
 			// Still needs to press confirm
-			fallthrough
-		default:
-			// User press "Confirm" button
-			grantAction, grantValues, err := parseLoginForm(resp)
-			resp, err = tmpClient.PostForm(grantAction, *grantValues)
-			if err != nil {
-				return nil, err
-			}
-			defer resp.Body.Close()
 		}
+
+		// User press "Confirm" button
+		grantAction, grantValues, err := parseLoginForm(resp)
+		resp, err = tmpClient.PostForm(grantAction, *grantValues)
+		if err != nil {
+			return nil, err
+		}
+		defer resp.Body.Close()
 
 		if resp.Request.URL.Path != "/blank.html" {
 			return nil, errors.New("login error")
