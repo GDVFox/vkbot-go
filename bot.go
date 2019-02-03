@@ -44,6 +44,8 @@ func NewVkBotWithAuth(login, pass, scope, ver string, clientID int64, client *ht
 	tmpClient := *client
 	tmpClient.Jar, _ = cookiejar.New(nil)
 
+	var resp *http.Response
+
 	// User sends login init request
 	requestURL := fmt.Sprintf(AuthAPIurl, clientID, scope, ver)
 	resp, err := tmpClient.Get(requestURL)
@@ -68,45 +70,46 @@ func NewVkBotWithAuth(login, pass, scope, ver string, clientID int64, client *ht
 	defer resp.Body.Close()
 
 	if resp.Request.URL.Path != "/blank.html" {
-		// User uses Two-factor authentication
 		queryVals := resp.Request.URL.Query()
-		if queryVals.Get("act") != "authcheck" {
-			return nil, errors.New("login error")
-		}
+		switch {
+		case queryVals.Get("act") == "authcheck":
+			// User uses Two-factor authentication
+			// Enter confirmation code for VK message
+			var confirmString string
+			_, err := fmt.Scanf("%s", &confirmString)
+			if err != nil {
+				return nil, err
+			}
 
-		// Enter confirmation code for VK message
-		var confirmString string
-		_, err := fmt.Scanf("%s", &confirmString)
-		if err != nil {
-			return nil, err
-		}
+			confirmAction, confirmValues, err := parseLoginForm(resp)
+			if err != nil {
+				return nil, err
+			}
 
-		confirmAction, confirmValues, err := parseLoginForm(resp)
-		if err != nil {
-			return nil, err
-		}
+			confirmValues.Set("code", confirmString)
 
-		confirmValues.Set("code", confirmString)
+			resp, err = tmpClient.PostForm(resp.Request.URL.Scheme+"://"+resp.Request.URL.Host+confirmAction, *confirmValues)
+			if err != nil {
+				return nil, err
+			}
+			defer resp.Body.Close()
 
-		resp, err = tmpClient.PostForm(resp.Request.URL.Scheme+"://"+resp.Request.URL.Host+confirmAction, *confirmValues)
-		if err != nil {
-			return nil, err
-		}
-		defer resp.Body.Close()
-
-		// User press "Confirm" button
-		if resp.Request.URL.Path != "/blank.html" {
+			// Still needs to press confirm
+			fallthrough
+		default:
+			// User press "Confirm" button
 			grantAction, grantValues, err := parseLoginForm(resp)
 			resp, err = tmpClient.PostForm(grantAction, *grantValues)
 			if err != nil {
 				return nil, err
 			}
 			defer resp.Body.Close()
-
-			if resp.Request.URL.Path != "/blank.html" {
-				return nil, errors.New("login error")
-			}
 		}
+
+		if resp.Request.URL.Path != "/blank.html" {
+			return nil, errors.New("login error")
+		}
+
 	}
 
 	respArgs, err := url.ParseQuery(resp.Request.URL.Fragment)
