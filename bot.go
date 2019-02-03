@@ -2,10 +2,12 @@ package vkbotgo
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/http/cookiejar"
 	"net/url"
 
 	"github.com/google/go-querystring/query"
@@ -33,6 +35,86 @@ func NewVkBot(accessToken, ver string, client *http.Client) (*VkBot, error) {
 	}
 
 	return vkBot, nil
+}
+
+// NewVkBotWithAuth creates a new VkBot with login/pass authorization
+// and you can pass a http.Client.
+func NewVkBotWithAuth(login, pass, scope, ver string, clientID int64, client *http.Client) (*VkBot, error) {
+	// We need to remember cookies
+	tmpClient := *client
+	tmpClient.Jar, _ = cookiejar.New(nil)
+
+	// User sends login init request
+	requestURL := fmt.Sprintf(AuthAPIurl, clientID, scope, ver)
+	resp, err := tmpClient.Get(requestURL)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	// User eneters email and pass
+	actionAddr, postVals, err := parseLoginForm(resp)
+	if err != nil {
+		return nil, err
+	}
+
+	postVals.Set("email", login)
+	postVals.Set("pass", pass)
+
+	resp, err = tmpClient.PostForm(actionAddr, *postVals)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.Request.URL.Path != "/blank.html" {
+		// User uses Two-factor authentication
+		queryVals := resp.Request.URL.Query()
+		if queryVals.Get("act") != "authcheck" {
+			return nil, errors.New("login error")
+		}
+
+		// Enter confirmation code for VK message
+		var confirmString string
+		_, err := fmt.Scanf("%s", &confirmString)
+		if err != nil {
+			return nil, err
+		}
+
+		confirmAction, confirmValues, err := parseLoginForm(resp)
+		if err != nil {
+			return nil, err
+		}
+
+		confirmValues.Set("code", confirmString)
+
+		resp, err = tmpClient.PostForm(resp.Request.URL.Scheme+"://"+resp.Request.URL.Host+confirmAction, *confirmValues)
+		if err != nil {
+			return nil, err
+		}
+		defer resp.Body.Close()
+
+		// User press "Confirm" button
+		if resp.Request.URL.Path != "/blank.html" {
+			grantAction, grantValues, err := parseLoginForm(resp)
+			resp, err = tmpClient.PostForm(grantAction, *grantValues)
+			if err != nil {
+				return nil, err
+			}
+			defer resp.Body.Close()
+
+			if resp.Request.URL.Path != "/blank.html" {
+				return nil, errors.New("login error")
+			}
+		}
+	}
+
+	respArgs, err := url.ParseQuery(resp.Request.URL.Fragment)
+	if err != nil {
+		return nil, err
+	}
+
+	return NewVkBot(respArgs.Get("access_token"), ver, client)
 }
 
 // Request makes a request to a method with given params.
