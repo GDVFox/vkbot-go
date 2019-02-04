@@ -233,8 +233,8 @@ type SecureLevel struct {
 
 	// Level Level
 	Level int64 `json:"level,omitempty"`
-	// Uid User ID
-	Uid int64 `json:"uid,omitempty"`
+	// UID User ID
+	UID int64 `json:"uid,omitempty"`
 }
 
 // AccountOnoffOptions type from VK API Schema(account_onoff_options). Settings parameters
@@ -1158,8 +1158,8 @@ type OauthError struct {
 	Error string `json:"error"`
 	// ErrorDescription Error description
 	ErrorDescription string `json:"error_description"`
-	// RedirectUri URI for validation
-	RedirectUri string `json:"redirect_uri,omitempty"`
+	// RedirectURI URI for validation
+	RedirectURI string `json:"redirect_uri,omitempty"`
 }
 
 // StoriesStoryStatsStat type from VK API Schema(stories_story_stats_stat).
@@ -1469,8 +1469,8 @@ type AccountOffer struct {
 	Img string `json:"img,omitempty"`
 	// Instruction Instruction how to process the offer
 	Instruction string `json:"instruction,omitempty"`
-	// InstructionHtml Instruction how to process the offer (HTML format)
-	InstructionHtml string `json:"instruction_html,omitempty"`
+	// InstructionHTML Instruction how to process the offer (HTML format)
+	InstructionHTML string `json:"instruction_html,omitempty"`
 	// Price Offer price
 	Price int64 `json:"price,omitempty"`
 	// ShortDescription Offer short description
@@ -1923,8 +1923,8 @@ type LeadsEntry struct {
 	Status int64 `json:"status,omitempty"`
 	// TestMode Information whether test mode is enabled
 	TestMode *BaseBoolInt `json:"test_mode,omitempty"`
-	// Uid User ID
-	Uid int64 `json:"uid,omitempty"`
+	// UID User ID
+	UID int64 `json:"uid,omitempty"`
 }
 
 // UsersUserType type from VK API Schema(users_user_type). Object type
@@ -2391,10 +2391,10 @@ type SecureTransaction struct {
 	Date int64 `json:"date,omitempty"`
 	// ID Transaction ID
 	ID int64 `json:"id,omitempty"`
-	// UidFrom From ID
-	UidFrom int64 `json:"uid_from,omitempty"`
-	// UidTo To ID
-	UidTo int64 `json:"uid_to,omitempty"`
+	// UIDFrom From ID
+	UIDFrom int64 `json:"uid_from,omitempty"`
+	// UIDTo To ID
+	UIDTo int64 `json:"uid_to,omitempty"`
 	// Votes Votes number
 	Votes int64 `json:"votes,omitempty"`
 }
@@ -4064,8 +4064,8 @@ type NotesNoteComment struct {
 	Oid int64 `json:"oid"`
 	// ReplyTo ID of replied comment
 	ReplyTo int64 `json:"reply_to,omitempty"`
-	// Uid Comment author&#39;s ID
-	Uid int64 `json:"uid"`
+	// UID Comment author&#39;s ID
+	UID int64 `json:"uid"`
 }
 
 // PlacesPlaceMin type from VK API Schema(places_place_min).
@@ -4258,8 +4258,8 @@ type WidgetsCommentRepliesItem struct {
 	Likes *WidgetsWidgetLikes `json:"likes,omitempty"`
 	// Text Comment text
 	Text string `json:"text,omitempty"`
-	// Uid User ID
-	Uid int64 `json:"uid,omitempty"`
+	// UID User ID
+	UID int64 `json:"uid,omitempty"`
 	// User
 	User *UsersUserFull `json:"user,omitempty"`
 }
@@ -4388,8 +4388,8 @@ type PagesWikipageFull struct {
 	EditorID int64 `json:"editor_id,omitempty"`
 	// GroupID Community ID
 	GroupID int64 `json:"group_id"`
-	// Html Page content, HTML
-	Html string `json:"html,omitempty"`
+	// HTML Page content, HTML
+	HTML string `json:"html,omitempty"`
 	// ID Page ID
 	ID int64 `json:"id"`
 	// Source Page content, wiki
