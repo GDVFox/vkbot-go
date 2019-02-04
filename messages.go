@@ -8,26 +8,6 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
-// Message is a struct describing a private message.
-type Message struct {
-	// ID message ID.
-	ID int64 `json:"id"`
-	// Date when the message has been sent in Unixtime.
-	Date int64 `json:"date"`
-	// PeerID peer ID.
-	PeerID int64 `json:"peer_id"`
-	// Message author's ID.
-	FromID int64 `json:"from_id"`
-	// Text message text.
-	Text string `json:"text"`
-	// RandomID ID used for sending messages. It returned only for outgoing messages.
-	RandomID int64 `json:"random_id"`
-	// Important is it an important message.
-	Important bool `json:"important"`
-	// Payload service variable message bots.
-	Payload string `json:"payload"`
-}
-
 // MessagesGetConversationsParams params for messages.getConversations method
 //
 // https://vk.com/dev/messages.getConversations
